@@ -5,16 +5,32 @@ import { InfoItem } from './components/infoItem';
 import { Button } from './components/button';
 import { useEffect, useState } from 'react';
 import { GridItemType } from './types/gridItemType';
+import { Item } from './data/items';
 const App = () => {
-  const [playing,setPlaying] = useState<boolean>(false);
+  const [playing, setPlaying] = useState<boolean>(false);
   const [timeElapsed, setTimeElapsed] = useState<number>(0);
-  const [moveCount,setMoveCount] = useState<number>(0);
+  const [moveCount, setMoveCount] = useState<number>(0);
   const [shownCount, setShownCount] = useState<number>(0);
   const [gridItems, setGridItems] = useState<GridItemType[]>([]);
   useEffect(() => resetAndCreateGrid(), []);
 
   const resetAndCreateGrid = () => {
+    // Passo 1 - resetar o jogo
+    setTimeElapsed(0);
+    setMoveCount(0);
+    setShownCount(0);
+    let tmpGrid: GridItemType[] = [];
+    for (let i = 0; i < (Item.length * 2); i++) {
+      tmpGrid.push({
+        item: null,
+        shown: false,
+        permanentShown: false
+      });
+    }
 
+    setGridItems(tmpGrid)
+
+    setPlaying(true);
   }
   return (
     <div>
