@@ -1,7 +1,12 @@
 import * as C from './App.styles'
 import logoImage from './assets/devmemory_logo.png';
+import RestartIcon from './svgs/restart.svg';
 import { InfoItem } from './components/infoItem';
+import { Button } from './components/button';
 const App = () => {
+  const resetAndCreateGrid = () => {
+
+  }
   return (
     <div>
       <C.Container>
@@ -13,7 +18,7 @@ const App = () => {
             <InfoItem label= "Tempo" value="00:00"/>
             <InfoItem label= "Movimentos" value="0"/>
           </C.InfoArea>
-          <button>Reiniciar</button>
+          <Button icon={RestartIcon} label='Reiniciar' onClick={resetAndCreateGrid}/>
         </C.Info>
         <C.GridArea>
             ....
