@@ -14,15 +14,24 @@ const App = () => {
   const [moveCount, setMoveCount] = useState<number>(0);
   const [shownCount, setShownCount] = useState<number>(0);
   const [gridItems, setGridItems] = useState<GridItemType[]>([]);
-  useEffect(() => resetAndCreateGrid(), []);  
+  useEffect(() => resetAndCreateGrid(), []);
   useEffect(() => {
-    const timer = setInterval(()=>{
-      if(playing) setTimeElapsed(timeElapsed+1);
-    },1000);
+    const timer = setInterval(() => {
+      if (playing) setTimeElapsed(timeElapsed + 1);
+    }, 1000);
     return () => clearInterval(timer);
-  },[playing,timeElapsed])
-  const handleItemClick = (index: number) =>{
+  }, [playing, timeElapsed])
+  const handleItemClick = (index: number) => {
+    if (playing && index !== null && shownCount < 2) {
+      let tmpGrid = [...gridItems];
 
+      if (tmpGrid[index].permanentShown === false && tmpGrid[index].shown === false) {
+        tmpGrid[index].shown = true;
+        setShownCount(shownCount + 1);
+      }
+
+      setGridItems(tmpGrid);
+    }
   }
   const resetAndCreateGrid = () => {
     // Passo 1 - resetar o jogo
@@ -47,7 +56,7 @@ const App = () => {
         tmpGrid[pos].item = i;
       }
     }
-    
+
     // 2.3 - jogar no state
     setGridItems(tmpGrid)
 
@@ -68,11 +77,11 @@ const App = () => {
         </C.Info>
         <C.GridArea>
           <C.Grid>
-            {gridItems.map((item,index)=> (
+            {gridItems.map((item, index) => (
               <GridItem
-              key={index}
-              item={item}
-              onClick={() => handleItemClick(index)}
+                key={index}
+                item={item}
+                onClick={() => handleItemClick(index)}
               />
             ))}
           </C.Grid>
@@ -81,5 +90,4 @@ const App = () => {
     </div>
   )
 }
-
 export default App;
