@@ -9,9 +9,11 @@ type Props = {
 
 export const GridItem = ({item,onClick} : Props) => {
   return (
-    <C.container onClick={onClick}>
+    <C.container 
+    showBackground={item.permanentShown || item.shown}
+    onClick={onClick}>
       {!item.permanentShown && !item.shown &&
-        <C.Icon src={b7svg}></C.Icon>
+        <C.Icon src={b7svg} opacity={.1} ></C.Icon>
       }
       {
         (item.permanentShown || item.shown) && item.item !== null &&
