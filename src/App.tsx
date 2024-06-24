@@ -5,7 +5,8 @@ import { InfoItem } from './components/infoItem';
 import { Button } from './components/button';
 import { useEffect, useState } from 'react';
 import { GridItemType } from './types/gridItemType';
-import { Item } from './data/items';
+import { items } from './data/items';
+import { GridItem } from './components/gridItem';
 const App = () => {
   const [playing, setPlaying] = useState<boolean>(false);
   const [timeElapsed, setTimeElapsed] = useState<number>(0);
@@ -13,14 +14,16 @@ const App = () => {
   const [shownCount, setShownCount] = useState<number>(0);
   const [gridItems, setGridItems] = useState<GridItemType[]>([]);
   useEffect(() => resetAndCreateGrid(), []);
+  const handleItemClick = (index: number) =>{
 
+  }
   const resetAndCreateGrid = () => {
     // Passo 1 - resetar o jogo
     setTimeElapsed(0);
     setMoveCount(0);
     setShownCount(0);
     let tmpGrid: GridItemType[] = [];
-    for (let i = 0; i < (Item.length * 2); i++) {
+    for (let i = 0; i < (items.length * 2); i++) {
       tmpGrid.push({
         item: null,
         shown: false,
@@ -29,10 +32,10 @@ const App = () => {
     }
     // 2.2 - preencher o grid
     for (let w = 0; w < 2; w++) {
-      for (let i = 0; i < Item.length; i++) {
+      for (let i = 0; i < items.length; i++) {
         let pos = -1;
         while (pos < 0 || tmpGrid[pos].item !== null) {
-          pos = Math.floor(Math.random() * (Item.length * 2));
+          pos = Math.floor(Math.random() * (items.length * 2));
         }
         tmpGrid[pos].item = i;
       }
@@ -58,7 +61,13 @@ const App = () => {
         </C.Info>
         <C.GridArea>
           <C.Grid>
-
+            {gridItems.map((item,index)=> (
+              <GridItem
+              key={index}
+              item={item}
+              onClick={() => handleItemClick(index)}
+              />
+            ))}
           </C.Grid>
         </C.GridArea>
       </C.Container>
